@@ -1,42 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
-int topo[10],k;
-void dfs(int a[10][10],int n,int visted[10],int source)
+int min(int a, int b)
 {
-  int i;
-  visted[source]=1;
-  for(i=1;i<=n;i++)
-  {
-      if(a[source][i]==1 && visted[i]==0)
-        dfs(a,n,visted,i);
-  topo[++k]=source;
-  }
-}
+    if(a<b)
+        return a;
+    else
+        return b;
 
-int main()
+}
+void floyd(int n, int d[10][10])
 {
-    int n,a[10][10],i,j,visted[10];
-    printf("Read number of nodes:");
-    scanf("%d",&n);
-    printf("read adjacency matrix:\n");
-    for(i=1;i<=n;i++)
+    int i,j,k;
+    for(k=1; k<=n; k++)
     {
-        for(j=1;j<=n;j++)
-            scanf("%d",&a[i][j]);
-    }
-    for(i=1;i<=n;i++)
-        visted[i]=0;
-    for(i=1;i<+n;i++)
-    {
+        for(i=1; i<=n; i++)
+        {
+            for(j=1; j<=n; j++)
+            {
+                d[i][j]=min(d[i][j],d[i][k]+d[k][j]);
 
-       if(visted[i]==0)
-       {
-           dfs(a,n,visted,i);
-       }
+            }
+
+        }
     }
-  printf("\n topological ordering is:\n");
-  for(i=k;i>=1;i--)
-    printf("%d\t",topo[i]);
-    return 0;
 }
+    int main()
+    {
+        int n,a[10][10];
+        int i,j,k;
+        printf("enter number of nodes \n");
+        scanf("%d",&n);
+        printf("\n enter adjacency matrix \n ");
+        for(i=1; i<=n; i++)
+        {
+            for(j=1; j<=n; j++)
+            {
+                scanf("%d",&a[i][j]);
+            }
+        }
 
+        floyd(n,a);
+        printf("the all pair shortest distance is : \n");
+        for(i=1; i<=n; i++)
+        {
+            for(j=1; j<=n; j++)
+            {
+                printf("5%d",a[i][j]);
+
+            }
+        }
+
+        return 0;
+    }
